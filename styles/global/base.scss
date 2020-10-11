@@ -1,0 +1,24 @@
+body{
+  font-family: $ff-main;
+  font-size: 1rem;
+  line-height: 1.2;
+  background-color: lighten(grey,45%);
+
+}
+
+html {
+  box-sizing: border-box;
+
+  @media (max-width: 700px) {
+    font-size: 16px;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  ul, ol {
+    list-style-type: none;
+  }
+
+}

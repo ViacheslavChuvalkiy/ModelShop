@@ -1,0 +1,11 @@
+
+div.sidebar_admin
+    ul.sidebar_admin_ul
+
+container.sale_items
+
+    include item_form
+
+    form(action="/add_item_photos", method= 'POST' enctype='multipart/form-data').add_item_photos_form.admin_form
+        input(id = 'add_item_img', name = 'multi_choice_img', type = "file", alt= 'Выбрать фото товара', accept="image/jpeg,image/png,image/gif" )
+        button.btn_add(type = "submit")  Добавить
