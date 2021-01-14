@@ -2,9 +2,64 @@ include sections/head
 
 div.sidebar_admin
     ul.sidebar_admin_ul
+        include sections/admin_menu
 
-div.grid_sale_items_list
-    //include sections/list_sale_items
+if  all_items_visible
+
+    div.grid_sale_items_list
+        div.grid_item_block
+            each item in list_sale_items
+                img.grid_item_img(id = item._id,src = item.main_img)
+
+else
+
+    div.selected_item_admin
+        div.selected_item_admin_form
+            h3 Основное фото товара
+                img(src = selected_sale_item.main_img)
+            input(id = 'input_img', name = 'choice_img', type = "file", alt= 'Выбрать основное фото товара', accept="image/jpeg,image/png,image/gif" required)
+
+        div.selected_item_others_image_admin_form
+            h3.selected_item_additions_photo Фото товара
+            div.grid_img_block_edit_item
+                each item in selected_sale_item.addition_img
+                    img.grid_item_img(src = item)
+            div.grid_block_buttons
+                input(id = 'input_other_img', name = 'multi_choice_img', type = "file", alt= 'Выбрать фото товара', accept="image/jpeg,image/png,image/gif" multiple)
+                button.btn_clear(id='clear_photo') Очистить
+
+        div.selected_item_main_options_admin_form
+            h3 Описание товара
+
+            div.block_description
+                textarea(id = 'title', name = 'title', type = "text", placeholder = "Введите наименование",value = selected_sale_item.title  )
+                textarea(id = 'describe', name = 'describe', type = "text", placeholder = "Введите описание",value = selected_sale_item.description )
+
+            div.block_category
+                p Категория
+                select
+                    option Блузки
+                        each item,index in ['Блузки', 'Рубашки', 'Платья', 'Юбки', 'Брюки', 'Джемперы', 'Свитеры', 'Кардиганы', 'Кофты', 'Пиджаки', 'Костюмы']
+                            option(value = item, id = 'category', name = 'category',  required) #{item}
+                p Цена
+                input(id = 'price', name = 'price', type = "number", step= '50', placeholder = "Введите цену",value = selected_sale_item.cost required)
+
+            div.count_size
+                div.count_size_elem
+                    p XS:
+                    input(type="number",  id ="count_XS",name="count_item", step= '10', min = '0', placeholder = "количество",value = selected_sale_item.Size_XS)
+                div.count_size_elem
+                    p S:
+                    input(type="number",  id ="count_S", name="count_item", step= '10', min = '0', placeholder = "количество",value = selected_sale_item.Size_S)
+                div.count_size_elem
+                    p M:
+                    input(type="number",  id ="count_M", name="count_item", step= '10', min = '0', placeholder = "количество",value = selected_sale_item.Size_M)
+                div.count_size_elem
+                    p L:
+                    input(type="number",  id ="count_L", name="count_item", step= '10', min = '0', placeholder = "количество",value = selected_sale_item.Size_L)
+
+
+    button.btn_edit(type = "submit", id='add_item')  Редактировать
 
 script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
 script(src="https://code.jquery.com/jquery-3.5.1.js")

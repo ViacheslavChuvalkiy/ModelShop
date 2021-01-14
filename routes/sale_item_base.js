@@ -8,6 +8,7 @@ router.post('/', async (req, res) => {
     var sale_item = Sale_item({
         main_img: req.body.choice_img,
         addition_img: req.body.multi_choice_img,
+        category: req.body.category,
         title: req.body.title,
         description: req.body.describe,
         cost: req.body.price,

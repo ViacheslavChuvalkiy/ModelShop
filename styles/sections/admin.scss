@@ -1,3 +1,11 @@
+textarea {
+  margin: 5px;
+  width: auto;
+  min-height: 150px;
+  padding: 5px;
+  resize: none;
+}
+
 .sale_items{
   display: flex;
   width: 80%;
@@ -22,9 +30,11 @@
 
   & a{
     @include centerer-x();
+    margin-top: 5px;
     color: #332600;
     letter-spacing: 0.1rem;
     font-size: 22px;
+
   }
 
   & p{
@@ -41,7 +51,7 @@
 .add_sale_items_form{
   width: 100%;
   height: 650px;
-  margin-top: 80px;
+  margin-top: 10px;
   border: 1px solid grey;
 
 }
@@ -89,8 +99,8 @@
 }
 
 .main_options_admin_form{
-  display: block;
-  margin-top: 130px;
+  display: inline-block;
+  margin-top: 30px;
   width: 100%;
   border: 1px solid grey;
 
@@ -103,7 +113,7 @@
     font-size: 22px;
   }
 
-  & select{
+  & s/*elect{
     display: inline-block;
     vertical-align: top;
     width: 15%;
@@ -119,8 +129,7 @@
     margin-left: 15px;
     margin-bottom: 5px;
     padding: 5px;
-    resize: none;
-  }
+  }*/
 
   & input{
     display: inline-block;
@@ -138,7 +147,6 @@
   width: 100px;
   margin: 10px;
   right: 5px;
-
 }
 
 .additions_photo{
@@ -219,6 +227,11 @@
 .grid_sale_items_list{
 
   display: grid;
+  width: 80%;
+  margin-left: 17%;
+  margin-top: 20px;
+  border: black 1px solid;
+  height: auto;
 
   & .grid_item_block{
 
@@ -231,10 +244,134 @@
 
   & .grid_item_img{
     display: block;
-    width: 100%;
-    height: 500px;
-    padding-right: 4px;
+    width: 90%;
+    height: 450px;
+    padding: 6px;
     transition: all 0.7s;
+  }
+
+  .grid_item_img:hover{
+    cursor: pointer;
+  }
+
+}
+
+.selected_item_admin{
+  display: inline-block;
+  width: 100%;
+  max-width: 1330px;
+  margin-left: 15%;
+  justify-content: space-around;
+  text-align: center;
+  padding: 15px;
+
+   & .selected_item_admin_form{
+
+     display: block;
+     width: 31%;
+     height: 500px;
+     padding: 5px;
+
+     & img{
+       display: block;
+       width: 95%;
+       height: 450px;
+       top: 45px;
+       padding: 5px;
+     }
+
+     & #input_img{
+       display: block;
+       position: absolute;
+       float: left;
+       margin-left: 30px;
+
+     }
+
+   }
+
+  & .selected_item_others_image_admin_form{
+    display: block;
+    width: 70%;
+    margin-top: -495px;
+    min-height: 500px;
+    border: 1px solid grey;
+    padding: 5px;
+    float: right;
+  }
+
+  & .grid_img_block_edit_item{
+
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(3, 3fr);
+    grid-template-rows: auto;
+    grid-gap: 2px 2px;
+    min-height: 400px;
+
+    & img{
+      width: 100%;
+      height: 230px;
+      border: 1px solid grey;
+      padding: 0;
+
+    }
+
+    & input{
+      display: block;
+    }
 
   }
+}
+
+
+
+.grid_block_buttons{
+
+  margin-top: 20px;
+
+  & .btn_clear {
+
+    margin: 0;
+
+  }
+}
+
+
+.selected_item_main_options_admin_form{
+
+  display: inline-block;
+
+}
+
+.block_description{
+  display: inherit;
+  vertical-align: top;
+}
+
+.block_category{
+  display: inherit;
+  vertical-align: top;
+
+  & div{
+    display: inherit;
+  }
+
+  & p{
+    margin: 0 0 5px 0;
+    width: 100%;
+  }
+}
+
+.count_size{
+  display: inherit;
+  vertical-align: top;
+
+}
+
+
+.btn_edit{
+  top: 25px;
+  margin-bottom: 15px;
+  margin-left: 50%;
 }

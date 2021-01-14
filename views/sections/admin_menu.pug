@@ -1,0 +1,13 @@
+
+-
+    var options_list = [
+    {name: 'Добавить товар', form: 'add_sale_items_form'},
+    {name: 'Редактировать товар', form: 'edit_items_page'},
+    {name: 'Настроить основною страницу', form: 'add_sale_items_form'},
+    {name: 'Настроить основную страницу лукбук', form: 'add_sale_items_form'},
+    {name: 'Загрузить фото на сервер', form: 'add_item_photos_form'},
+    {name: 'Основная страница', form: '/'}];
+
+each item, index in options_list
+    li(id = item.form).sidebar_admin_li #{options_list[index].name}
+

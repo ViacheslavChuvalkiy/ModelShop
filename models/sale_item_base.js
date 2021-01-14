@@ -11,6 +11,10 @@ var Sale_Item_Base = new mongoose.Schema(
             type: Array,
             required: true
         },
+        category: {
+            type: String,
+            required: true
+        },
         title: {
             type: String,
             required: true

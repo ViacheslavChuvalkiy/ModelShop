@@ -4,7 +4,7 @@ var storage = multer.diskStorage({
 
     destination(req,file, cb){
 
-        cb(null,'build/images/item_photos')},
+        cb(null,'images/item_photos')},
 
     filename(req,file, cb){
         cb(null,file.originalname) //new Date().toISOString() + '-' +

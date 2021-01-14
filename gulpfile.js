@@ -1,4 +1,4 @@
-const gulp = require('gulp');
+const gulp  = require('gulp');
 const pug = require('gulp-pug');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
@@ -15,10 +15,16 @@ const uglify = require('gulp-uglify');
 const app = express();
 app.use(express.urlencoded({extended:true}));
 
+/* ------------ Static ------------- */
+
+app.use(express.static('fonts'));
 app.use(express.static('views'));
 app.use(express.static('images'));
+app.use(express.static('images/item_photos'));
 app.use(express.static('styles'));
 app.use(express.static('js'));
+
+/* ------------ Views ------------- */
 
 app.set("views", 'views');
 app.set("view engine", "pug");

@@ -5,13 +5,18 @@ function addEventShowAddImage() {
 
     if(admin_img_block[0] && this.files[0]) {
 
-        var img = document.createElement("img");
-        img.src = window.URL.createObjectURL(this.files[0]);
-        img.onload = function() {
-            window.URL.revokeObjectURL(this.src);
+        if(admin_img_block[0].childNodes.length = 0) {
+            var img = document.createElement("img");
+            img.src = window.URL.createObjectURL(this.files[0]);
+            img.onload = function () {
+                window.URL.revokeObjectURL(this.src);
+            }
+            admin_img_block[0].appendChild(img);
         }
-        admin_img_block[0].appendChild(img);
-
+        else{
+            child_img = admin_img_block[0].childNodes[0];
+            child_img.src = this.files[0];
+        }
     }
 }
 
@@ -23,13 +28,20 @@ function addEventShowOthersAddImage() {
 
         for(var i = 0; i < this.files.length;i++){
 
-            var img = document.createElement("img");
-            img.src = window.URL.createObjectURL(this.files[i]);
-            img.onload = function () {
-                window.URL.revokeObjectURL(this.src);
+            if(admin_images_block[0].childNodes[i]){
+
+                var img = admin_images_block[0].childNodes[i];
+                img.src = window.URL.createObjectURL(this.files[i]);
+            }
+            else {
+                var img = document.createElement("img");
+                img.src = window.URL.createObjectURL(this.files[i]);
+                img.onload = function () {
+                    window.URL.revokeObjectURL(this.src);
+                }
             };
 
-            var img_elem = $('.others_image_admin_form img')
+            var img_elem = $('.others_image_admin_form img');
 
             if (img_elem.length == 6) {
                 break;
@@ -55,44 +67,14 @@ function clear_photo_in_admin_page() {
     }
 }
 
-function addSideBarAdmin() {
-
-    var main__list = $('.sidebar_admin_ul');
-    options_list = [{name: 'Добавить товар',
-                        form: 'add_sale_items_form'},
-                    {name: 'Редактировать товар',
-                        form: 'edit_items_page'},
-                    {name: 'Настроить основною страницу',
-                        form: 'add_sale_items_form'},
-                    {name: 'Настроить основную страницу лукбук',
-                        form: 'add_sale_items_form'},
-                    {name: 'Загрузить фото на сервер',
-                        form: 'add_item_photos_form'},
-                    {name: 'Основная страница',
-                        form: '/'}
-                        ];
-
-        var item = main__list[0];
-
-        //item.empty();
-
-        for (var c = 0; c < options_list.length; c++) {
-
-            var child = document.createElement("li");
-            child.classList.add('sidebar_admin_li');
-
-            child.href = options_list[c].form;
-            var text = document.createTextNode(options_list[c].name);
-            child.appendChild(text);
-            item.appendChild(child);
-        }
-
-
-}
-
 function slide_active_admin_form(event) {
 
-    var current_form = event.target.href;
+    if (event) {
+        var current_form = event.target.id;
+    }
+    else {
+        var current_form = this.id;
+    }
 
     var admin_forms = $('.admin_form');
 
@@ -114,7 +96,6 @@ function slide_active_admin_form(event) {
 
     if(current_form == 'edit_items_page'){
 
-        //var URL_page = event.target.baseURI + '/edit_page';
         $(location).attr('href','/edit_items_page');
 
     }
@@ -123,11 +104,22 @@ function slide_active_admin_form(event) {
 
     }
     else{
-        var active_form = $('.' + current_form);
-        active_form[0].classList.add('active_admin_form');
-        //$(location).attr('href', '/admin');
-    }
-    ;
 
+         if (location.pathname == '/edit_items_page') {
+            $(location).attr('href','/admin');
+         }
+         else{
+             var activateform = $('.' + current_form);
+             if(activateform[0]) {
+                 activateform[0].classList.add('active_admin_form');
+             }
+         }
+    }
+}
+
+function img_edit_selected(event) {
+
+    var id_selected_item = event.target.id;
+    $(location).attr('href','/edit_items_page?param1=' + id_selected_item);
 
 }
