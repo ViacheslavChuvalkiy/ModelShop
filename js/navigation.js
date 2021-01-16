@@ -61,12 +61,12 @@ function ShowUserMenu_Sign_in(event) {
 
 function HideUserMenu_Sign_in(event) {
 
-    if ($('.menu_registration').visible){
-        $('.menu_registration').hide();
+    if ($('.menu_user_registration').visible){
+        $('.menu_user_registration').hide();
     }
 
-    else if($('.menu_sign_in').visible){
-        $('.menu_sign_in').hide();
+    else if($('.menu_user_sign_in').visible){
+        $('.menu_user_sign_in').hide();
     }
 
     $('.menu_user').hide();
@@ -76,18 +76,36 @@ function HideUserMenu_Sign_in(event) {
 function Choice_User_Menu(event) {
 
     var temp_value = $('.' + event.target.value);
-    var menu_registration = $('.menu_registration');
-    var menu_sign_in = $('.menu_sign_in');
 
-    if(event.target.value == 'menu_sign_in'){
+    if(!temp_value[0]){
+        return;
+    }
 
-        $('.menu_user_sign_in').css('max-height','210px');
-        menu_registration.hide();
+    if(temp_value[0].classList.contains('is-hidden')){
+        temp_value[0].classList.remove('is-hidden');
+    }
+
+    var menu_registration = $('.menu_user_registration');
+    var menu_sign_in = $('.menu_user_sign_in');
+
+    if(temp_value[0].classList.contains('menu_sign_in') ){
+
+        if(menu_sign_in[0].classList.contains('is-hidden')){
+            menu_sign_in[0].classList.remove('is-hidden');
+        }
+
+        menu_sign_in.css('max-height','215px');
+        menu_registration[0].classList.add('is-hidden');
 
     }
     else {
-        $('.menu_user_registration').css('max-height','250px');
-        menu_sign_in.hide();
+
+        if(menu_registration[0].classList.contains('is-hidden')){
+            menu_registration[0].classList.remove('is-hidden');
+        }
+
+        menu_registration.css('max-height','295px');
+        menu_sign_in[0].classList.add('is-hidden');
     }
 
     if(temp_value.visible){

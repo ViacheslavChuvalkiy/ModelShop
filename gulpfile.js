@@ -1,9 +1,15 @@
+const keys = require('./keys');
+
 const gulp  = require('gulp');
 const pug = require('gulp-pug');
 const sass = require('gulp-sass');
+const session = require('express-session');
+const MongoStore = require('connect-mongodb-session')(session);
+const bcrypt = require('bcryptjs');
+const flash = require('connect-flash');
+
 const rename = require('gulp-rename');
 const rimraf = require('rimraf');
-var exec = require('gulp-exec');
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -11,24 +17,44 @@ const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 
+const varMiddleware = require('./middleware/variables');
+
+const store = new MongoStore({
+    collection: 'sessions',
+    uri: keys.MongoBD_URL
+})
+
 /* ------------ App ------------- */
 const app = express();
 app.use(express.urlencoded({extended:true}));
 
 /* ------------ Static ------------- */
 
+app.use(express.static('js'));
 app.use(express.static('fonts'));
 app.use(express.static('views'));
 app.use(express.static('images'));
 app.use(express.static('images/item_photos'));
 app.use(express.static('styles'));
-app.use(express.static('js'));
+
+
+/* ------------ Session ------------- */
+
+app.use(session({
+    secret: keys.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store
+}));
+
+
+app.use(varMiddleware);
+app.use(flash());
 
 /* ------------ Views ------------- */
 
 app.set("views", 'views');
 app.set("view engine", "pug");
-
 
 //////////////Routers//////////////////////////////////////////////
 
@@ -37,7 +63,7 @@ const addFile = require(path.join(__dirname, "routes",'addFile'));
 const sale_item_base = require(path.join(__dirname, "routes",'sale_item_base'));
 const editPage = require(path.join(__dirname, "routes",'edit_page'));
 
-//const users_sign_in = require(path.join(__dirname, "routes",'authorization'));
+const users_sign_in = require(path.join(__dirname, "routes",'authorization'));
 //const add_to_cart = require(path.join(__dirname, "routes",'sale_item'));
 
 //////////////Models//////////////////////////////////////////////
@@ -51,11 +77,16 @@ app.use('/sale_item_base', sale_item_base);
 app.use( fileMiddleware.single('multi_choice_img'));
 app.use('/add_item_photos', addFile);
 app.use('/edit_items_page', editPage);
+app.use('/authorization', users_sign_in);
 
 //////////////////////////////////////////////////////////////////////////
 
-app.get('/', (req,res) => [
-    res.render('index')
+app.get('/', async (req,res) => [
+    res.render('index', {
+        isAdmin: true,
+        isLogin: true,
+        error: req.flash('error')
+    })
 ]);
 
 app.get('/sale_page', (req,res) => [
@@ -68,11 +99,11 @@ app.get('/admin', (req,res) => [
 
 async function start_server(){
 
-    const url = 'mongodb+srv://admin_site:r2d2c3po@cluster0.ce3gh.gcp.mongodb.net/shop_Nataly_Bloom';
+    const url = keys.MongoBD_URL;
     await mongoose.connect(url,{
         useNewUrlParser: true}
     )
-    app.listen('3000');
+    app.listen(keys.PORT);
 
 }
 
@@ -103,15 +134,9 @@ gulp.task('clean', function del(cb) {
 gulp.task('add_app', function() {
 
     start_server();
-    exec('node index.js', err => err);
 
 });
 
-gulp.task('reload_app', function() {
-
-    exec('node index.js', err => err);
-
-});
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -119,8 +144,8 @@ gulp.task('reload_app', function() {
 gulp.task('watch', function() {
 
     gulp.watch('styles/**/*.scss', gulp.series('styles:compile'));
-    gulp.watch('views/**/*.pug',   gulp.series('reload_app'));
-    gulp.watch('js/**/*.js',       gulp.series('reload_app'));
+    // gulp.watch('views/**/*.pug',   gulp.series('reload_app'));
+    // gulp.watch('js/**/*.js',       gulp.series('reload_app'));
 
 });
 
