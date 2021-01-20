@@ -7,7 +7,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const bcrypt = require('bcryptjs');
 const flash = require('connect-flash');
-
 const rename = require('gulp-rename');
 const rimraf = require('rimraf');
 const express = require('express');
@@ -58,12 +57,13 @@ app.set("view engine", "pug");
 
 //////////////Routers//////////////////////////////////////////////
 
-const addUsers = require(path.join(__dirname, "routes",'addUser'));
+const addUsers = require(path.join(__dirname, "routes",'user'));
 const addFile = require(path.join(__dirname, "routes",'addFile'));
 const sale_item_base = require(path.join(__dirname, "routes",'sale_item_base'));
 const editPage = require(path.join(__dirname, "routes",'edit_page'));
 
 const users_sign_in = require(path.join(__dirname, "routes",'authorization'));
+
 //const add_to_cart = require(path.join(__dirname, "routes",'sale_item'));
 
 //////////////Models//////////////////////////////////////////////
@@ -82,12 +82,23 @@ app.use('/authorization', users_sign_in);
 //////////////////////////////////////////////////////////////////////////
 
 app.get('/', async (req,res) => [
+    res.render('index'),{
+        messageUser : false,
+    }
+]);
+
+app.get('/form_error', async (req,res)=> {
     res.render('index', {
         isAdmin: true,
         isLogin: true,
-        error: req.flash('error')
+        messageUser : true,
+        loginError :  req.flash('loginError'),
+        registrationError:  req.flash('registrationError'),
+        email: req.body.email,
+        name:  req.body.name,
+        phone: req.body.phone
     })
-]);
+});
 
 app.get('/sale_page', (req,res) => [
     res.render('sale_page')

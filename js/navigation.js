@@ -14,7 +14,6 @@ function toggleToActiveLink (event) {
 
 }
 
-
 function setClick_Button_User(event) {
 
     var buttons = $('.btn_user');
@@ -61,15 +60,32 @@ function ShowUserMenu_Sign_in(event) {
 
 function HideUserMenu_Sign_in(event) {
 
-    if ($('.menu_user_registration').visible){
-        $('.menu_user_registration').hide();
+    var menu_registration = $('.menu_user_registration');
+    var menu_sign_in = $('.menu_user_sign_in');
+    var user_form = $('.menu_user');
+
+    if (menu_registration.visible){
+        menu_registration.hide();
     }
 
-    else if($('.menu_user_sign_in').visible){
-        $('.menu_user_sign_in').hide();
+    else if(menu_sign_in.visible){
+        menu_sign_in.hide();
     }
 
-    $('.menu_user').hide();
+    user_form.closest()
+    user_form.hide();
+
+    if(menu_registration.find('.alert').length){
+        menu_registration.find('.alert').remove();
+        $(location).attr('href','/');
+    }
+
+    else if(menu_sign_in.find('.alert').length){
+        menu_sign_in.find('.alert').remove();
+        $(location).attr('href','/');
+    }
+
+
 
 }
 
@@ -117,18 +133,18 @@ function Choice_User_Menu(event) {
 
 }
 
-function User_Log_in(event) {
+function showUsersForm() {
 
-    Check_Users_Information_Fill();
+    var menu_registration = $('.menu_user_registration');
+    var menu_sign_in = $('.menu_user_sign_in');
 
-    var temp_user = {
-        login : $('.user_login').val(),
-        password: $('.user_pass').val()
-    };
+    if(menu_registration.find('.alert').length){
+        menu_registration.css('max-height','355px');
+        menu_registration.show();
+    }
 
-    //Connect_users(temp_user);
-}
-
-function Check_Users_Information_Fill() {
-
+    else if(menu_sign_in.find('.alert').length){
+        menu_sign_in.css('max-height','255px');
+        menu_sign_in.show();
+    }
 }

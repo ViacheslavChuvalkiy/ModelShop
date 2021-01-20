@@ -13,6 +13,7 @@ window.onload = (function() {
     /*List */
 
     setClick_Button_User();
+    showUsersForm();
 
     //Admin page//
     if($('#input_img')[0]) {

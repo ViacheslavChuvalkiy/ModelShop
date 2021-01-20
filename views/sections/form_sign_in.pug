@@ -3,7 +3,11 @@ form(action="/authorization", method= 'POST').menu_user.menu_user_sign_in
     a.user_menu_choice.user_menu_choice_sign(id='menu_sign_in') Войти
 
     div.menu_sign_in
-        input.user_sign_in_menu.user_login(id = 'email',   name = 'email',    type = "email",   placeholder = "e-mail" required)
+
+        if messageUser
+            p.alert #{loginError}
+
+        input.user_sign_in_menu.user_login(id = 'email',   name = 'email',   value =  email, type = "email",   placeholder = "введите e-mail" required)
         input.user_sign_in_menu.user_pass(id = 'password', name = 'password', type = "password",placeholder = "Пароль" required)
-        button.btn_sign_in_menu.btn_sign_in(type = "submit", id='sign_in',name = 'sign_in')  Войти
+        button.btn_sign_in_menu.btn_sign_in(id='sign_in',  name = 'sign_in'   type = "submit",)  Войти
         a.btn_sign_in_menu.btn_forgot_passw Забыли пароль?

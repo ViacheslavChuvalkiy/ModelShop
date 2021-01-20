@@ -4,10 +4,13 @@ form(action="/addUser", method= 'POST').menu_user.menu_user_registration
     a.user_menu_choice.user_menu_choice_reg(id='menu_registration') Регистрация
     div.menu_registration
 
-        input.user_sign_in_menu.user_login(id = 'email',       name = 'email',         type = "email",     placeholder = "e-mail"           required)
-        input.user_sign_in_menu.user_login(id = 'name',        name = 'name',          type = "text",      placeholder = "Ваше ФИО"         required)
-        input.user_sign_in_menu.user_pass(id = 'password_reg', name = 'password',      type = "password",  placeholder = "Пароль"           required)
-        input.user_sign_in_menu.user_pass(id = 'password_reg2',name = 'password2',     type = "password",  placeholder = "повторите пароль" required)
-        input.user_sign_in_menu.user_phone(id = 'phone',       name = 'phone',         type = "text",      placeholder = "номер телефона"   required)
+        if messageUser
+            p.alert #{registrationError}
+
+        input.user_sign_in_menu.user_login(id = 'email',       name = 'email',     value =  email,    type = "email",     placeholder = "e-mail"           required)
+        input.user_sign_in_menu.user_login(id = 'name',        name = 'name',      value =  name,    type = "text",      placeholder = "Ваше ФИО"         required)
+        input.user_sign_in_menu.user_pass(id = 'password',     name = 'password',  value =  '',     type = "password",  placeholder = "Пароль"           required)
+        input.user_sign_in_menu.user_pass(id = 'confirm',      name = 'confirm',   value =  '',     type = "password",  placeholder = "повторите пароль" required)
+        input.user_sign_in_menu.user_phone(id = 'phone',       name = 'phone',     value =  phone,    type = "text",      placeholder = "номер телефона"   required)
         button.btn_sign_in_menu.btn_reg_in(type = "submit", id='registration',name = 'registration')  Регистрация
         button.btn_sign_in_menu.menu_user_close Отмена

@@ -24,9 +24,9 @@ router.post('/', async (req,res)=> {
                 });
             }
             else {
-                res.redirect('/');
+                req.flash('loginError', 'Неверный пароль');
+                res.redirect('/form_error');
             }
-
 
         }
     }
@@ -34,9 +34,7 @@ router.post('/', async (req,res)=> {
         console.log(e);
     }
 
-
 });
-
 
 router.get('/logout', async (req,res)=> {
     req.session.destroy(() => {
