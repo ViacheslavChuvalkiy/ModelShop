@@ -1,45 +1,42 @@
 var express = require('express');
 var router = express.Router();
-var users = require('../models/add_users');
 
-var bcrypt = require('bcryptjs');
+var {validatorLogIn} = require('../middleware/validator');
+const {validationResult} = require('express-validator');
 
-router.post('/', async (req,res)=> {
+router.post('/', validatorLogIn, async (req,res)=> {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+
+        return res.status(422).render('index', {
+                messageUser : true,
+                loginError :  errors.array()[0].msg,
+                registrationError:  false,
+                auth: false,
+                itsAdmin : false,
+                email: req.body.email
+            }
+        )
+    }
 
     try {
+          var user = req.user;
+          req.session.user = user;
+          req.session.isAuthenticated = true;
+          req.session.itsAdmin = user.isAdmin;
+          req.session.save(err => {
+            if (err) {
+               throw err;
+               }
 
-        const {email, password} = req.body;
-        var candidate = await users.findOne({email});
-
-        if (candidate) {
-            const areSame = await bcrypt.compare(password, candidate.password);
-            if(areSame) {
-                req.session.user = candidate;
-                req.session.isAuthenticated = true;
-                req.session.save(err => {
-                    if (err) {
-                        throw err;
-                    }
-                    res.redirect('/');
-                });
-            }
-            else {
-                req.flash('loginError', 'Неверный пароль');
-                res.redirect('/form_error');
-            }
-
-        }
+            res.redirect('/');
+            });
     }
     catch (e) {
         console.log(e);
     }
 
-});
-
-router.get('/logout', async (req,res)=> {
-    req.session.destroy(() => {
-        res.redirect('/');
-    });
 });
 
 module.exports = router;

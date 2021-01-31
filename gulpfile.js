@@ -16,6 +16,7 @@ const concat = require('gulp-concat');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 
+
 const varMiddleware = require('./middleware/variables');
 
 const store = new MongoStore({
@@ -57,6 +58,7 @@ app.set("view engine", "pug");
 
 //////////////Routers//////////////////////////////////////////////
 
+const homepage = require(path.join(__dirname, "routes",'home'));
 const addUsers = require(path.join(__dirname, "routes",'user'));
 const addFile = require(path.join(__dirname, "routes",'addFile'));
 const sale_item_base = require(path.join(__dirname, "routes",'sale_item_base'));
@@ -72,6 +74,7 @@ const fileMiddleware = require('./models/file_middleware');
 
 //////////////////////////////////////////////////////////////////////////
 
+app.use('/', homepage);
 app.use('/addUser', addUsers);
 app.use('/sale_item_base', sale_item_base);
 app.use( fileMiddleware.single('multi_choice_img'));
@@ -81,37 +84,11 @@ app.use('/authorization', users_sign_in);
 
 //////////////////////////////////////////////////////////////////////////
 
-app.get('/', async (req,res) => [
-    res.render('index'),{
-        messageUser : false,
-    }
-]);
-
-app.get('/form_error', async (req,res)=> {
-    res.render('index', {
-        isAdmin: true,
-        isLogin: true,
-        messageUser : true,
-        loginError :  req.flash('loginError'),
-        registrationError:  req.flash('registrationError'),
-        email: req.body.email,
-        name:  req.body.name,
-        phone: req.body.phone
-    })
-});
-
-app.get('/sale_page', (req,res) => [
-    res.render('sale_page')
-]);
-
-app.get('/admin', (req,res) => [
-    res.render('admin')
-]);
-
 async function start_server(){
 
     const url = keys.MongoBD_URL;
     await mongoose.connect(url,{
+        useUnifiedTopology: true,
         useNewUrlParser: true}
     )
     app.listen(keys.PORT);

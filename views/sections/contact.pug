@@ -12,11 +12,22 @@
 
     a.contact(href="https://instagram.com/nataly_bloom_ua?igshid=veen24yyi34p" target="_blank")
         i.fa.fa-instagram.instagram-icon(aria-hidden="true")
-    a.contact.sign_in
-        i.fa.fa-user-circle.fa-2x(aria-hidden="true")
-        div.user_authorization
-            button.btn_user.btn_sign_in(value='menu_sign_in') Войти
-            button.btn_user.btn_registration(value='menu_registration') Регистрация
-    a.contact(href="/admin") Админ
+
+    div.sign_in
+        i.sign_in.contact.fa.fa-user-circle.fa-2x(aria-hidden="true")
+            if auth
+                div.user_profile_menu
+                    a.link_user(href="/user_profile") Ваш профиль
+                    a.link_user(href="/user_orders") Ваши заказы
+                    a.link_user(href="/logout") Выйти
+
+            else
+                div.user_authorization
+                    button.btn_user.btn_sign_in(value='menu_sign_in') Войти
+                    button.btn_user.btn_registration(value='menu_registration') Регистрация
+        if itsAdmin
+            a.contact(href="/admin") Админ
+
+
 
 

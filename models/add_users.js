@@ -19,6 +19,9 @@ var SchemaUser = new mongoose.Schema(
             type: String,
             required: true
         },
+        isAdmin: {
+            type: Boolean
+        },
         cart: {
             items : [
                 {

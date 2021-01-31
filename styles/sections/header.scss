@@ -18,12 +18,17 @@
 
 .contacts{
   text-align: right;
+
+  & i{
+    padding: 2px 10px 8px;
+  }
+
 }
 
 .contact {
   display: inline-block;
-  vertical-align: middle;
-  padding: 10px 10px 8px;
+  vertical-align: text-top;
+  padding: 5px 3px 8px;
   color: #424242;
   transition: 0.3s;
 
@@ -35,7 +40,6 @@
     margin-right: 8px;
     padding-right: 18px;
     border-right: 1px solid #e2e2e2;
-    vertical-align: bottom;
   }
 
   &__icon{
@@ -155,7 +159,7 @@
 
 .user_menu_choice{
 
-  @include button-reset;
+  @include button_reset;
 
   display: inline-block;
   padding: 15px 15px 3px 5px;
@@ -171,5 +175,81 @@
   }
 
 }
+
+.sign_in {
+
+  display: inline-block;
+
+  .user_authorization{
+    display: none;
+    position: absolute;
+    transition: 0.5s;
+    right: 20px;
+    top: 33px;
+    height: 55px;
+    z-index: 1000;
+
+    .btn_user{
+      margin-top: 20px;
+      margin-left: 5px;
+      min-width: 85px;
+      height: auto;
+      border: none;
+      color: #424242;
+      font-size: 21px;
+      font-family: $ff-main-bold;
+
+      &:hover{
+        text-decoration: underline;
+
+      }
+    }
+
+  }
+
+  &:hover {
+
+    .user_authorization {
+      display: block;
+    }
+
+    .user_profile_menu {
+      display: block;
+    }
+
+  }
+}
+
+
+.user_profile_menu{
+
+  display: none;
+  position: absolute;
+  transition: 0.5s;
+  right: 20px;
+  top: 45px;
+  height: 55px;
+  z-index: 1000;
+
+  & a{
+
+    margin: 25px 10px;
+    min-width: 85px;
+    height: 30px;
+
+    text-decoration: none;
+    color: #424242;
+    font-size: 21px;
+    font-family: $ff-main-bold;
+
+    &:hover{
+      text-decoration: underline;
+
+    }
+  }
+
+}
+
+
 
 

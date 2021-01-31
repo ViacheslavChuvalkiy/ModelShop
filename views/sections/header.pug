@@ -3,13 +3,20 @@ header.header
         img.logo__picture(src= "logo_1.jpeg", alt="picture")
         img.logo__picture(src= "logo_2.jpeg", alt="picture")
     .header__top
-        .container
-            include contact
+        include contact
     .header__bottom
         .container
             include nav
-    include form_sign_in
-    include form_registration
+        if messageUser
+            if loginError
+                include form_sign_in
+            else
+                include form_registration
+
+        else
+            include form_sign_in
+            include form_registration
+
 
 
 
